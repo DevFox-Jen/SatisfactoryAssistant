@@ -1,4 +1,4 @@
-package com.devfox.recipies;
+package com.devfox.recipes;
 
 import com.devfox.items.Items;
 
