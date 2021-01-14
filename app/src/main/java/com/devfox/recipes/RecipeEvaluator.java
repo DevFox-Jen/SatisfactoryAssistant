@@ -1,11 +1,9 @@
 package com.devfox.recipes;
 
 import com.devfox.items.ItemStack;
-import com.devfox.items.Items;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.lang.reflect.Array;
 import java.util.*;
 
 /**
@@ -17,11 +15,11 @@ public final class RecipeEvaluator {
 
     }
 
-    public static void reportAmountOfEachComponentPerMin(Recipe[] recipeSet, Items item,float bQuotaPerMin){
-    logger.info(bQuotaPerMin + " " + item.name() + "/min REQUIRES:");
-        Items[] components = getComponentsOfItem(recipeSet,item);
-        for(Items component : components){
-            logger.info(calcAmountRequiredPerMin(recipeSet,item,bQuotaPerMin,component) + " " + component.name() + "/min");
+    public static void reportAmountOfEachComponentPerMin(Recipe[] recipeSet, String item,float bQuotaPerMin){
+    logger.info(bQuotaPerMin + " " + item + "/min REQUIRES:");
+        String[] components = getComponentsOfItem(recipeSet,item);
+        for(String component : components){
+            logger.info(calcAmountRequiredPerMin(recipeSet,item,bQuotaPerMin,component) + " " + component+ "/min");
         }
     }
 
@@ -31,20 +29,20 @@ public final class RecipeEvaluator {
      * @param item
      * @return
      */
-    public static Items[] getComponentsOfItem(Recipe[] recipeSet,Items item){
+    public static String[] getComponentsOfItem(Recipe[] recipeSet,String item){
         Recipe originalItemRecipe = findFirstRecipeForItem(recipeSet,item);
 
         Queue<ItemStack> itemStackQueue = new LinkedList<>(Arrays.asList(originalItemRecipe.getInputItemStacks()));
-        List<Items> componentList = new LinkedList<>();
+        List<String> componentList = new LinkedList<>();
 
         while(!itemStackQueue.isEmpty()){
-            Items nextItem = itemStackQueue.remove().getItem();
+            String nextItem = itemStackQueue.remove().getItemID();
             componentList.add(nextItem);
             Recipe itemRecipe = findFirstRecipeForItem(recipeSet,nextItem);
             itemStackQueue.addAll(Arrays.asList(itemRecipe.getInputItemStacks()));
         }
 
-        return componentList.toArray(new Items[0]);
+        return componentList.toArray(new String[0]);
     }
 
     /**
@@ -57,15 +55,15 @@ public final class RecipeEvaluator {
      * @param itemA The input item you want to know how much you need of
      * @return returns the total amount of itemA needed to make the quota amount of itemB or 0 if the item is not needed
      */
-    public static float calcAmountRequiredPerMin(Recipe[] recipeSet, Items itemB,float bQuotaPerMin,Items itemA){
-        List<Recipe> recipeList = Arrays.asList(recipeSet.clone());
+    public static float calcAmountRequiredPerMin(Recipe[] recipeSet, String itemB,float bQuotaPerMin,String itemA){
+        List<Recipe> recipeList = Arrays.asList(recipeSet);
 
         //Find the recipe for the target item
         Recipe itemBRecipe = findFirstRecipeForItem(recipeSet,itemB);
 
         //Calculate how many times this recipe need to be used in a min to create the quota amount
         float recipeMultiplier = bQuotaPerMin/itemBRecipe.getOutputProducedPerMin(); //How many lots of the recipe need to be completed per min to match quota
-        logger.trace("Recipe Multiplier for " + itemB.name() + ": " + recipeMultiplier);
+        logger.trace("Recipe Multiplier for " + itemB + ": " + recipeMultiplier);
 
         float itemACountInThisRecipe = 0;
 
@@ -73,13 +71,13 @@ public final class RecipeEvaluator {
         //If the recipe is a base recipe then this for loop won't be used
         for(ItemStack inputItemStack : itemBRecipe.getInputItemStacksPerMinute()){
             float amountOfInputItemPerMinRequiredToMeetQuota = inputItemStack.getCount() * recipeMultiplier;
-            itemACountInThisRecipe += calcAmountRequiredPerMin(recipeSet,inputItemStack.getItem(),amountOfInputItemPerMinRequiredToMeetQuota, itemA);
+            itemACountInThisRecipe += calcAmountRequiredPerMin(recipeSet,inputItemStack.getItemID(),amountOfInputItemPerMinRequiredToMeetQuota, itemA);
         }
 
         //Calculate the amount of item A that this recipe needs, if any
         for(ItemStack inputItemStack : itemBRecipe.getInputItemStacksPerMinute()){
-            if(inputItemStack.getItem().equals(itemA)){
-                logger.trace(itemA.name() + " is in recipe for " + itemB.name());
+            if(inputItemStack.getItemID().equals(itemA)){
+                logger.trace(itemA + " is in recipe for " + itemB);
                 itemACountInThisRecipe += inputItemStack.getCount() * recipeMultiplier;
             }
         }
@@ -93,9 +91,9 @@ public final class RecipeEvaluator {
      * @param item
      * @return
      */
-    public static Recipe findFirstRecipeForItem(Recipe[] recipeSet, Items item){
+    public static Recipe findFirstRecipeForItem(Recipe[] recipeSet, String item){
         for(Recipe r : recipeSet){
-            if(r.getOutputItemStack().getItem().equals(item)){
+            if(r.getOutputItemStack().getItemID().equals(item)){
                 return r;
             }
         }

@@ -4,18 +4,18 @@ package com.devfox.items;
  * Consists of an item and a count
  */
 public class ItemStack {
-    private int count;
-    private Items item;
-    public ItemStack(Items item, int count){
+    private float count;
+    private String itemID;
+    public ItemStack(String itemID, float count){
         this.count = count;
-        this.item = item;
+        this.itemID = itemID;
     }
 
-    public int getCount(){
+    public float getCount(){
         return count;
     }
 
-    public Items getItem(){
-        return item;
+    public String getItemID(){
+        return itemID;
     }
 }

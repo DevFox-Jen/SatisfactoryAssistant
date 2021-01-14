@@ -40,7 +40,7 @@ public class Recipe {
     public ItemStack[] getInputItemStacksPerMinute(){
         ItemStack[] minItemStacks = new ItemStack[getInputItemStacks().length];
         for(int i = 0;i < getInputItemStacks().length;i++){
-            minItemStacks[i] = new ItemStack(getInputItemStacks()[i].getItem(),getInputItemStacks()[i].getCount() * getIterationsPerMin());
+            minItemStacks[i] = new ItemStack(getInputItemStacks()[i].getItemID(),getInputItemStacks()[i].getCount() * getIterationsPerMin());
         }
         return minItemStacks;
     }

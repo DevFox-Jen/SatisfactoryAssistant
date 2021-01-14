@@ -1,7 +1,6 @@
 package com.devfox.recipes;
 
 import com.devfox.items.ItemStack;
-import com.devfox.items.Items;
 
 /**
  * A recipe with no inputs
