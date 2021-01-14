@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<recipes>
+    <recipe name="NormalIronOre" timetakensecs="1.0">
+        <input></input>
+        <output>
+            <stack count="1">IRON_ORE</stack>
+        </output>
+    </recipe>
+    <recipe name="NormalCopperOre" timetakensecs="1.0">
+        <input></input>
+        <output>
+            <stack count="1">COPPER_ORE</stack>
+        </output>
+    </recipe>
+    <recipe name="IronIngot" timetakensecs="2.0">
+        <input>
+            <stack count="1">IRON_ORE</stack>
+        </input>
+        <output>
+            <stack count="1">IRON_INGOT</stack>
+        </output>
+    </recipe>
+    <recipe name="CopperIngot" timetakensecs="2.0">
+        <input>
+            <stack count="1">COPPER_ORE</stack>
+        </input>
+        <output>
+            <stack count="1">COPPER_INGOT</stack>
+        </output>
+    </recipe>
+    <recipe name="IronPlate" timetakensecs="6.0">
+        <input>
+            <stack count="3">IRON_INGOT</stack>
+        </input>
+        <output>
+            <stack count="2">IRON_PLATE</stack>
+        </output>
+    </recipe>
+</recipes>

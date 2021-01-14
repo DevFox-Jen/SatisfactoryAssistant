@@ -1,39 +1,67 @@
 package com.devfox.recipes;
 
-import com.devfox.items.Items;
+import com.devfox.items.ItemStack;
 
 public class Recipe {
-    private Recipe[] inputRecipes;
+    private ItemStack[] inputItemStacks;
     private String name;
-    private Items outputItem;
-    private float outputCountPerMinute; //How many of the output item are produced per minute
+    private ItemStack outputItemStack;
+    private static final float SECS_IN_MIN = 60.0f;
+    private float timeTakenSecs;
 
-    /**
-     * Constructor for creating a recipe that takes a set of input recipes and
-     * @param name
-     * @param inputRecipes
-     * @param outputItem
-     */
-    public Recipe(String name, Recipe[] inputRecipes, Items outputItem,float outputCountPerMinute ){
-        this.inputRecipes = inputRecipes;
+    public Recipe(String name, ItemStack[] inputItemStacks, ItemStack outputItemStack, float timeTakenSecs){
+        if(inputItemStacks == null)
+            throw new IllegalArgumentException("Input Item Stacks cannot be null");
+        if(outputItemStack == null)
+            throw new IllegalArgumentException("Output Item Stack cannot be null");
+        if(timeTakenSecs <= 0)
+            throw new IllegalArgumentException("Time taken must be greater than 0 seconds");
+        if(name == null)
+            throw new IllegalArgumentException("Recipe must have a name");
+
+        this.inputItemStacks = inputItemStacks;
         this.name = name;
-        this.outputItem = outputItem;
-        this.outputCountPerMinute = outputCountPerMinute;
+        this.outputItemStack = outputItemStack;
+        this.timeTakenSecs = timeTakenSecs;
     }
 
     public String getName(){
         return name;
     }
 
-    public Items getOutputItem(){
-        return outputItem;
+    public ItemStack getOutputItemStack(){
+        return outputItemStack;
     }
 
-    public Recipe[] getInputRecipes(){
-        return inputRecipes;
+    public ItemStack[] getInputItemStacks(){
+        return inputItemStacks;
     }
 
-    public float getOutputCountPerMinute(){
-        return outputCountPerMinute;
+    public ItemStack[] getInputItemStacksPerMinute(){
+        ItemStack[] minItemStacks = new ItemStack[getInputItemStacks().length];
+        for(int i = 0;i < getInputItemStacks().length;i++){
+            minItemStacks[i] = new ItemStack(getInputItemStacks()[i].getItem(),getInputItemStacks()[i].getCount() * getIterationsPerMin());
+        }
+        return minItemStacks;
+    }
+
+    /**
+     *
+     * @return How many times the recipe can occur per minute
+     */
+    public float getIterationsPerMin(){
+        return SECS_IN_MIN/getTimeTakenSecs();
+    }
+
+    public float getTimeTakenSecs(){
+        return timeTakenSecs;
+    }
+
+    /**
+     * Divide the number of seconds in minute by the time taken for the recipe to get a ratio, then multiply the output item stack amount by the ratio
+     * @return
+     */
+    public float getOutputProducedPerMin(){
+        return getOutputItemStack().getCount() * getIterationsPerMin();
     }
 }

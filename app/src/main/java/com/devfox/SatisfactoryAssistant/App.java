@@ -3,12 +3,14 @@
  */
 package com.devfox.SatisfactoryAssistant;
 
-public class App {
-    public String getGreeting() {
-        return "Hello World!";
-    }
+import com.devfox.items.Items;
+import com.devfox.recipes.Recipe;
+import com.devfox.recipes.RecipeEvaluator;
+import com.devfox.recipes.RecipeGenerator;
 
-    public static void main(String[] args) {
-        System.out.println(new App().getGreeting());
+public class App {
+    public static void main(String[] args){
+        Recipe[] firstRecipeSet = RecipeGenerator.GetFirstRecipeSet();
+        RecipeEvaluator.reportAmountOfEachComponentPerMin(firstRecipeSet, Items.IRON_PLATE,60);
     }
 }
