@@ -3,6 +3,7 @@
  */
 package com.devfox.SatisfactoryAssistant;
 
+import com.devfox.items.ItemNames;
 import com.devfox.recipes.Recipe;
 import com.devfox.recipes.RecipeEvaluator;
 import com.devfox.recipes.RecipeGenerator;
@@ -11,11 +12,15 @@ import org.xml.sax.SAXException;
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.File;
 import java.io.IOException;
+import static com.devfox.recipes.RecipeEvaluator.*;
 
 public class App {
     public static void main(String[] args) throws IOException, SAXException, ParserConfigurationException {
         Recipe[] firstRecipeSet = RecipeGenerator.readRecipesFromXMLFile(new File(ClassLoader.getSystemResource("recipes.xml").getPath()));
 
-        //RecipeEvaluator.reportAmountOfEachComponentPerMin(firstRecipeSet, "IRON_PLATE",60);
+        //reportAmountOfEachComponentPerMin(firstRecipeSet, "ROTOR",getAmountOfItemProducedPerMin(firstRecipeSet,"ROTOR"));
+        //reportAmountOfEachComponentPerMin(firstRecipeSet, "IRON_PLATE",60);
+        //reportAmountOfEachComponentPerMin(firstRecipeSet,"VERSATILE_FRAMEWORK",5);
+        reportAmountOfEachComponentPerMin(firstRecipeSet,"STEEL_PIPE",200);
     }
 }

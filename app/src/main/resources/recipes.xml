@@ -152,4 +152,62 @@
             <stack count="4">SOLID_BIOFUEL</stack>
         </output>
     </recipe>
+    <recipe name="Alternate: Casted Screw" timetakensecs="24">
+        <input>
+            <stack count="5">IRON_INGOT</stack>
+        </input>
+        <output>
+            <stack count="20">SCREW</stack>
+        </output>
+    </recipe>
+    <recipe name="Coal" timetakensecs="1">
+        <input>
+        </input>
+        <output>
+            <stack count="1">COAL_ORE</stack>
+        </output>
+    </recipe>
+    <recipe name="Steel" timetakensecs="4">
+        <input>
+            <stack count="3">IRON_ORE</stack>
+            <stack count="3">COAL_ORE</stack>
+        </input>
+        <output>
+            <stack count="3">STEEL_INGOT</stack>
+        </output>
+    </recipe>
+    <recipe name="Steel Pipe" timetakensecs="6">
+        <input>
+            <stack count="3">STEEL_INGOT</stack>
+        </input>
+        <output>
+            <stack count="2">STEEL_PIPE</stack>
+        </output>
+    </recipe>
+    <recipe name="Steel Beam" timetakensecs="4">
+        <input>
+            <stack count="4">STEEL_INGOT</stack>
+        </input>
+        <output>
+            <stack count="1">STEEL_BEAM</stack>
+        </output>
+    </recipe>
+    <recipe name="Versatile Framework" timetakensecs="24">
+        <input>
+            <stack count="1">MODULAR_FRAME</stack>
+            <stack count="12">STEEL_BEAM</stack>
+        </input>
+        <output>
+            <stack count="2">VERSATILE_FRAMEWORK</stack>
+        </output>
+    </recipe>
+    <recipe name="Bolted Iron Plate" timetakensecs="0.25">
+        <input>
+            <stack count="18">IRON_PLATE</stack>
+            <stack count="50">SCREW</stack>
+        </input>
+        <output>
+            <stack count="3">REINFORCED_IRON_PLATE</stack>
+        </output>
+    </recipe>
 </recipes>

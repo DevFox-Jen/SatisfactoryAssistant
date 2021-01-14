@@ -18,9 +18,15 @@ public final class RecipeEvaluator {
     public static void reportAmountOfEachComponentPerMin(Recipe[] recipeSet, String item,float bQuotaPerMin){
     logger.info(item + "|" + bQuotaPerMin + "/min REQUIRES:");
         String[] components = getComponentsOfItem(recipeSet,item);
+        logger.info(components.length);
         for(String component : components){
             logger.info(component + "|" + calcAmountRequiredPerMin(recipeSet,item,bQuotaPerMin,component) + "/min");
         }
+    }
+
+    public static float getAmountOfItemProducedPerMin(Recipe[] recipeSet, String item){
+        Recipe recipe = findFirstRecipeForItem(recipeSet,item);
+        return recipe.getOutputProducedPerMin();
     }
 
     /**
@@ -33,7 +39,7 @@ public final class RecipeEvaluator {
         Recipe originalItemRecipe = findFirstRecipeForItem(recipeSet,item);
 
         Queue<ItemStack> itemStackQueue = new LinkedList<>(Arrays.asList(originalItemRecipe.getInputItemStacks()));
-        List<String> componentList = new LinkedList<>();
+        Set<String> componentList = new HashSet<>();
 
         while(!itemStackQueue.isEmpty()){
             String nextItem = itemStackQueue.remove().getItemID();

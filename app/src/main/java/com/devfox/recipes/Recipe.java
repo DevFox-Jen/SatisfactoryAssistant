@@ -64,4 +64,23 @@ public class Recipe {
     public float getOutputProducedPerMin(){
         return getOutputItemStack().getCount() * getIterationsPerMin();
     }
+
+//    @Override
+//    public String toString(){
+//        StringBuilder builder = new StringBuilder();
+//        builder.append(getOutputItemStack().getItemID());
+//        builder.append("(").append(getOutputProducedPerMin()).append(")");
+//        builder.append(" <- ");
+//
+//        ItemStack[] minItemStacks = getInputItemStacksPerMinute();
+//
+//        for(int i = 0;i < minItemStacks.length-1;i++){
+//            builder.append(minItemStacks[i].getItemID()).append("(").append(minItemStacks[i].getCount()).append(")").append(" + ");
+//        }
+//
+//        builder.append(minItemStacks[minItemStacks.length-1]).append("(").append(minItemStacks[minItemStacks.length-1].getCount()).append(")");
+//        builder.append(" ").append("(/min");
+//        return builder.toString();
+//    }
+
 }
