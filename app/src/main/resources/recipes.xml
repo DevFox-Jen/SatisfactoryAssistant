@@ -36,4 +36,120 @@
             <stack count="2">IRON_PLATE</stack>
         </output>
     </recipe>
+    <recipe name="ReinforcedIronPlate" timetakensecs="12.0">
+        <input>
+            <stack count="6">IRON_PLATE</stack>
+            <stack count="12">SCREW</stack>
+        </input>
+        <output>
+            <stack count="1">REINFORCED_IRON_PLATE</stack>
+        </output>
+    </recipe>
+    <recipe name="ModularFrame" timetakensecs="60">
+        <input>
+            <stack count="3">REINFORCED_IRON_PLATE</stack>
+            <stack count="12">IRON_ROD</stack>
+        </input>
+        <output>
+            <stack count="2">MODULAR_FRAME</stack>
+        </output>
+    </recipe>
+    <recipe name="Rotor" timetakensecs="15">
+        <input>
+            <stack count="5">IRON_ROD</stack>
+            <stack count="25">SCREW</stack>
+        </input>
+        <output>
+            <stack count="1">ROTOR</stack>
+        </output>
+    </recipe>
+    <recipe name="SmartPlating" timetakensecs="30">
+        <input>
+            <stack count="1">REINFORCED_IRON_PLATE</stack>
+            <stack count="1">ROTOR</stack>
+        </input>
+        <output>
+            <stack count="1">SMART_PLATING</stack>
+        </output>
+    </recipe>
+    <recipe name="IronRod" timetakensecs="4">
+        <input>
+            <stack count="1">IRON_INGOT</stack>
+        </input>
+        <output>
+            <stack count="1">IRON_ROD</stack>
+        </output>
+    </recipe>
+    <recipe name="Screw" timetakensecs="6">
+        <input>
+            <stack count="1">IRON_ROD</stack>
+        </input>
+        <output>
+            <stack count="4">SCREW</stack>
+        </output>
+    </recipe>
+    <recipe name="CopperSheet" timetakensecs="6">
+        <input>
+            <stack count="2">COPPER_INGOT</stack>
+        </input>
+        <output>
+            <stack count="1">COPPER_SHEET</stack>
+        </output>
+    </recipe>
+    <recipe name="Wire" timetakensecs="4">
+        <input>
+            <stack count="1">COPPER_INGOT</stack>
+        </input>
+        <output>
+            <stack count="2">WIRE</stack>
+        </output>
+    </recipe>
+    <recipe name="Cable" timetakensecs="2">
+        <input>
+            <stack count="2">WIRE</stack>
+        </input>
+        <output>
+            <stack count="1">CABLE</stack>
+        </output>
+    </recipe>
+    <recipe name="Concrete" timetakensecs="4">
+        <input>
+            <stack count="3">LIMESTONE</stack>
+        </input>
+        <output>
+            <stack count="1">CONCRETE</stack>
+        </output>
+    </recipe>
+    <recipe name="Silica" timetakensecs="8">
+        <input>
+            <stack count="3">RAW_QUARTZ</stack>
+        </input>
+        <output>
+            <stack count="5">SILICA</stack>
+        </output>
+    </recipe>
+    <recipe name="Biomass(Wood)" timetakensecs="4">
+        <input>
+            <stack count="4">WOOD</stack>
+        </input>
+        <output>
+            <stack count="20">BIOMASS</stack>
+        </output>
+    </recipe>
+    <recipe name="Biomass(Leaves)" timetakensecs="5">
+        <input>
+            <stack count="10">LEAVES</stack>
+        </input>
+        <output>
+            <stack count="5">BIOMASS</stack>
+        </output>
+    </recipe>
+    <recipe name="Solid Biofuel" timetakensecs="4">
+        <input>
+            <stack count="8">BIOMASS</stack>
+        </input>
+        <output>
+            <stack count="4">SOLID_BIOFUEL</stack>
+        </output>
+    </recipe>
 </recipes>

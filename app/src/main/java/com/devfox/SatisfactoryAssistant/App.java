@@ -15,6 +15,7 @@ import java.io.IOException;
 public class App {
     public static void main(String[] args) throws IOException, SAXException, ParserConfigurationException {
         Recipe[] firstRecipeSet = RecipeGenerator.readRecipesFromXMLFile(new File(ClassLoader.getSystemResource("recipes.xml").getPath()));
-        RecipeEvaluator.reportAmountOfEachComponentPerMin(firstRecipeSet, "IRON_PLATE",60);
+
+        //RecipeEvaluator.reportAmountOfEachComponentPerMin(firstRecipeSet, "IRON_PLATE",60);
     }
 }

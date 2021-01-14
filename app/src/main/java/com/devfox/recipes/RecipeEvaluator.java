@@ -16,10 +16,10 @@ public final class RecipeEvaluator {
     }
 
     public static void reportAmountOfEachComponentPerMin(Recipe[] recipeSet, String item,float bQuotaPerMin){
-    logger.info(bQuotaPerMin + " " + item + "/min REQUIRES:");
+    logger.info(item + "|" + bQuotaPerMin + "/min REQUIRES:");
         String[] components = getComponentsOfItem(recipeSet,item);
         for(String component : components){
-            logger.info(calcAmountRequiredPerMin(recipeSet,item,bQuotaPerMin,component) + " " + component+ "/min");
+            logger.info(component + "|" + calcAmountRequiredPerMin(recipeSet,item,bQuotaPerMin,component) + "/min");
         }
     }
 
