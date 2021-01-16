@@ -2,6 +2,9 @@ package com.devfox.recipes;
 
 import com.devfox.items.ItemStack;
 
+import java.util.Arrays;
+import java.util.Objects;
+
 public class Recipe {
     private ItemStack[] inputItemStacks;
     private String name;
@@ -63,6 +66,37 @@ public class Recipe {
      */
     public float getOutputProducedPerMin(){
         return getOutputItemStack().getCount() * getIterationsPerMin();
+    }
+
+    /**
+     * The hash of the Recipe is denoted by a hash of the input item stacks, output item stacks and time taken.
+     * The name is not taken into consideration and is just decorative.
+     * @return
+     */
+    @Override
+    public int hashCode(){
+        return Objects.hash(inputItemStacks,outputItemStack,timeTakenSecs);
+    }
+
+    /**
+     * Two Recipes are equal if they have identical input item stacks, output item stacks, and take the same amount of time.
+     * The name is not taken into consideration and is considered decorative
+     * @param obj
+     * @return
+     */
+    @Override
+    public boolean equals(Object obj){
+        if(obj instanceof Recipe){
+            Recipe otherRecipe = (Recipe) obj;
+            if(Arrays.equals(inputItemStacks,otherRecipe.inputItemStacks)){
+                if(outputItemStack.equals(otherRecipe.outputItemStack)){
+                    if(timeTakenSecs == otherRecipe.timeTakenSecs){
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
     }
 
 //    @Override
