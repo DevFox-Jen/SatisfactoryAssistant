@@ -24,10 +24,10 @@ public final class RecipeEvaluator {
         }
     }
 
-    public static float getAmountOfItemProducedPerMin(Recipe[] recipeSet, String item){
-        Recipe recipe = findFirstRecipeForItem(recipeSet,item);
-        return recipe.getOutputProducedPerMin();
-    }
+//    public static float getAmountOfItemProducedPerMin(Recipe[] recipeSet, String item){
+//        Recipe recipe = findFirstRecipeForItem(recipeSet,item);
+//        return recipe.getOutputProducedPerMin();
+//    }
 
     /**
      * Given an item, returns a list of the items that are used to make it
@@ -62,33 +62,34 @@ public final class RecipeEvaluator {
      * @return returns the total amount of itemA needed to make the quota amount of itemB or 0 if the item is not needed
      */
     public static float calcAmountRequiredPerMin(Recipe[] recipeSet, String itemB,float bQuotaPerMin,String itemA){
-        List<Recipe> recipeList = Arrays.asList(recipeSet);
-
-        //Find the recipe for the target item
-        Recipe itemBRecipe = findFirstRecipeForItem(recipeSet,itemB);
-
-        //Calculate how many times this recipe need to be used in a min to create the quota amount
-        float recipeMultiplier = bQuotaPerMin/itemBRecipe.getOutputProducedPerMin(); //How many lots of the recipe need to be completed per min to match quota
-        logger.trace("Recipe Multiplier for " + itemB + ": " + recipeMultiplier);
-
-        float itemACountInThisRecipe = 0;
-
-        //For each input item stack to the recipe, call this method but multiply the required input amount per minute by the recipe multiplier.
-        //If the recipe is a base recipe then this for loop won't be used
-        for(ItemStack inputItemStack : itemBRecipe.getInputItemStacksPerMinute()){
-            float amountOfInputItemPerMinRequiredToMeetQuota = inputItemStack.getCount() * recipeMultiplier;
-            itemACountInThisRecipe += calcAmountRequiredPerMin(recipeSet,inputItemStack.getItemID(),amountOfInputItemPerMinRequiredToMeetQuota, itemA);
-        }
-
-        //Calculate the amount of item A that this recipe needs, if any
-        for(ItemStack inputItemStack : itemBRecipe.getInputItemStacksPerMinute()){
-            if(inputItemStack.getItemID().equals(itemA)){
-                logger.trace(itemA + " is in recipe for " + itemB);
-                itemACountInThisRecipe += inputItemStack.getCount() * recipeMultiplier;
-            }
-        }
-
-        return itemACountInThisRecipe;
+        return -1;
+//        List<Recipe> recipeList = Arrays.asList(recipeSet);
+//
+//        //Find the recipe for the target item
+//        Recipe itemBRecipe = findFirstRecipeForItem(recipeSet,itemB);
+//
+//        //Calculate how many times this recipe need to be used in a min to create the quota amount
+//        float recipeMultiplier = bQuotaPerMin/itemBRecipe.getOutputProducedPerMin(); //How many lots of the recipe need to be completed per min to match quota
+//        logger.trace("Recipe Multiplier for " + itemB + ": " + recipeMultiplier);
+//
+//        float itemACountInThisRecipe = 0;
+//
+//        //For each input item stack to the recipe, call this method but multiply the required input amount per minute by the recipe multiplier.
+//        //If the recipe is a base recipe then this for loop won't be used
+//        for(ItemStack inputItemStack : itemBRecipe.getInputItemStacksPerMinute()){
+//            float amountOfInputItemPerMinRequiredToMeetQuota = inputItemStack.getCount() * recipeMultiplier;
+//            itemACountInThisRecipe += calcAmountRequiredPerMin(recipeSet,inputItemStack.getItemID(),amountOfInputItemPerMinRequiredToMeetQuota, itemA);
+//        }
+//
+//        //Calculate the amount of item A that this recipe needs, if any
+//        for(ItemStack inputItemStack : itemBRecipe.getInputItemStacksPerMinute()){
+//            if(inputItemStack.getItemID().equals(itemA)){
+//                logger.trace(itemA + " is in recipe for " + itemB);
+//                itemACountInThisRecipe += inputItemStack.getCount() * recipeMultiplier;
+//            }
+//        }
+//
+//        return itemACountInThisRecipe;
     }
 
     /**
