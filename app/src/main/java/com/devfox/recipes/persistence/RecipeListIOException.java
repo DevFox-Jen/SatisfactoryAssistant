@@ -7,4 +7,5 @@ public class RecipeListIOException extends Exception{
     public RecipeListIOException(String message) {
         super(message);
     }
+    public RecipeListIOException(String message, Throwable cause){super(message,cause);}
 }
