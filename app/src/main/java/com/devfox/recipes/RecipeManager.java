@@ -2,6 +2,9 @@ package com.devfox.recipes;
 
 import com.devfox.recipes.persistence.RecipeListIO;
 import com.devfox.recipes.persistence.RecipeListIOException;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -11,9 +14,10 @@ import java.util.List;
  * Singleton Pattern.
  * The role of the RecipeManager is to act as the sole point of contact for the set of recipes to base calculations on.
  */
-public class RecipeManager {
+public final class RecipeManager {
     private volatile static RecipeManager uniqueInstance;
     private List<Recipe> recipeList = new ArrayList<>();
+    private static final Logger logger = LogManager.getLogger(RecipeManager.class);
 
     private RecipeManager(){}
 
@@ -25,6 +29,7 @@ public class RecipeManager {
         if (uniqueInstance == null) {
             synchronized (RecipeManager.class) {
                 if (uniqueInstance == null) {
+                    logger.trace("Created new RecipeManager");
                     uniqueInstance = new RecipeManager();
                 }
             }
@@ -41,20 +46,36 @@ public class RecipeManager {
     }
 
     /**
-     * Adds a new recipe to the recipe list of the manager
+     * Adds a new recipe to the recipe list of the manager. If the recipe already exists then a duplicate will not be added
      * @param recipe The recipe to add
      */
-    public final void addRecipe(Recipe recipe){
-        recipeList.add(recipe);
+    public void addRecipe(Recipe recipe){
+        if(!recipeList.contains(recipe)){
+            recipeList.add(recipe);
+        }
     }
 
     /**
-     * TODO override recipe hashcode() method to allow remove to function correctly
      * Removes a recipe from the recipe list of the manager
      * @param recipe the recipe to remove
      */
-    public final void removeRecipe(Recipe recipe){
+    public void removeRecipe(Recipe recipe){
         recipeList.remove(recipe);
+    }
+
+    /**
+     * Clears the internal recipe list maintained by the RecipeManager
+     */
+    public void clearRecipeList(){
+        recipeList.clear();
+    }
+
+    /**
+     * Destroys the RecipeManager resulting in {@link #getInstance()} returning a new instance of RecipeManager
+     */
+    public void destroyInstance(){
+        uniqueInstance = null; //De-refence will put the old intance up for GC
+        logger.trace("Destroyed RecipeManager");
     }
 
     /**
