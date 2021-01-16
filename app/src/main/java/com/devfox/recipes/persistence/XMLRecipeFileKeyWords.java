@@ -3,6 +3,7 @@ package com.devfox.recipes.persistence;
 public final class XMLRecipeFileKeyWords {
     private XMLRecipeFileKeyWords(){}
 
+    public static final String ROOT_TAG = "recipes";
     public static final String RECIPE_TAG = "recipe";
     public static final String STACK_TAG = "stack";
     public static final String INPUT_TAG = "input";
