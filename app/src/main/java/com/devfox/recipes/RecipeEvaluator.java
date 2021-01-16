@@ -8,6 +8,7 @@ import java.util.*;
 
 /**
  * Utility class that performs calculations and evaluates the result of a set of recipes.
+ * @deprecated
  */
 public final class RecipeEvaluator {
     private static final Logger logger = LogManager.getLogger(RecipeEvaluator.class);

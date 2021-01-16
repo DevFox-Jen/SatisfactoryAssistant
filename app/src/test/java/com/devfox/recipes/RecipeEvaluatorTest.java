@@ -5,6 +5,7 @@ import static org.junit.Assert.*;
 import com.devfox.recipes.persistence.RecipeListIOException;
 import com.devfox.recipes.persistence.RecipeListXMLIO;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.xml.sax.SAXException;
 
@@ -15,6 +16,7 @@ import java.io.IOException;
 import static com.devfox.items.ItemNames.*;
 import static com.devfox.recipes.persistence.RecipeListTestFiles.*;
 
+@Ignore
 public class RecipeEvaluatorTest {
     private Recipe[] plateRecipeTestSet;
 
