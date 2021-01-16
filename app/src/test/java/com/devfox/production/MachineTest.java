@@ -16,7 +16,7 @@ public class MachineTest {
 
     private static final float POWER_SHARD_CLOCK_SPEED_MODIFIER = +0.5f;
     private static final float BASE_MACHINE_CLOCK_SPEED = 1.0f;
-    private static final float NORMAL_CLOCK_SPEED = BASE_MACHINE_CLOCK_SPEED - 0.2f; //A clock speed that lies within the acceptable parameters before adding power shards
+    private static final float NORMAL_CLOCK_SPEED = 0.5f; //A clock speed that lies within the acceptable parameters before adding power shards
     private static final float SECS_IN_MIN = 60.0f;
 
     @Before
@@ -69,8 +69,8 @@ public class MachineTest {
 
     @Test
     public void TestProductionRateVaryWithClockSpeed(){
-        testMachine.setClockSpeed(NORMAL_CLOCK_SPEED);
-        float expectedProductionRate = testRecipe.getTimeTakenSecs() * NORMAL_CLOCK_SPEED;
+        testMachine.setClockSpeed(0.5f); //Half clock rate means double the time taken to produce something
+        float expectedProductionRate = testRecipe.getTimeTakenSecs() * 2.0f;
         Assert.assertEquals(expectedProductionRate,testMachine.getProductionRate(),0.0f);
     }
 
@@ -104,5 +104,12 @@ public class MachineTest {
 
         testMachine.setClockSpeed(randomClockSpeed);
         Assert.assertArrayEquals(scaledItemStacks,testMachine.getInputPartsPerMin());
+    }
+
+    @Test
+    public void TestScaledFrequencyPerMinute(){
+        testMachine.setPowerShard(2);
+        testMachine.setClockSpeed(2.0f);
+        Assert.assertEquals(20.0f,testMachine.getRecipeFrequencyPerMin(),0.0f);
     }
 }
