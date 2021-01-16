@@ -5,11 +5,13 @@ import com.devfox.items.ItemStack;
 import java.util.Arrays;
 import java.util.Objects;
 
+/**
+ * A recipe describes an input -> processtime -> output relationship between ItemStacks.
+ */
 public class Recipe {
     private ItemStack[] inputItemStacks;
     private String name;
     private ItemStack outputItemStack;
-    private static final float SECS_IN_MIN = 60.0f;
     private float timeTakenSecs;
 
     public Recipe(String name, ItemStack[] inputItemStacks, ItemStack outputItemStack, float timeTakenSecs){
@@ -39,34 +41,34 @@ public class Recipe {
     public ItemStack[] getInputItemStacks(){
         return inputItemStacks;
     }
+//
+//    public ItemStack[] getInputItemStacksPerMinute(){
+//        ItemStack[] minItemStacks = new ItemStack[getInputItemStacks().length];
+//        for(int i = 0;i < getInputItemStacks().length;i++){
+//            minItemStacks[i] = new ItemStack(getInputItemStacks()[i].getItemID(),getInputItemStacks()[i].getCount() * getIterationsPerMin());
+//        }
+//        return minItemStacks;
+//    }
 
-    public ItemStack[] getInputItemStacksPerMinute(){
-        ItemStack[] minItemStacks = new ItemStack[getInputItemStacks().length];
-        for(int i = 0;i < getInputItemStacks().length;i++){
-            minItemStacks[i] = new ItemStack(getInputItemStacks()[i].getItemID(),getInputItemStacks()[i].getCount() * getIterationsPerMin());
-        }
-        return minItemStacks;
-    }
-
-    /**
-     *
-     * @return How many times the recipe can occur per minute
-     */
-    public float getIterationsPerMin(){
-        return SECS_IN_MIN/getTimeTakenSecs();
-    }
+//    /**
+//     *
+//     * @return How many times the recipe can occur per minute
+//     */
+//    public float getIterationsPerMin(){
+//        return SECS_IN_MIN/getTimeTakenSecs();
+//    }
 
     public float getTimeTakenSecs(){
         return timeTakenSecs;
     }
 
-    /**
-     * Divide the number of seconds in minute by the time taken for the recipe to get a ratio, then multiply the output item stack amount by the ratio
-     * @return
-     */
-    public float getOutputProducedPerMin(){
-        return getOutputItemStack().getCount() * getIterationsPerMin();
-    }
+//    /**
+//     * Divide the number of seconds in minute by the time taken for the recipe to get a ratio, then multiply the output item stack amount by the ratio
+//     * @return
+//     */
+//    public float getOutputProducedPerMin(){
+//        return getOutputItemStack().getCount() * getIterationsPerMin();
+//    }
 
     /**
      * The hash of the Recipe is denoted by a hash of the input item stacks, output item stacks and time taken.
