@@ -1,6 +1,5 @@
 package com.devfox.production;
 
-import com.devfox.SatisfactoryAssistant.MethodNotImplementedException;
 import com.devfox.items.ItemStack;
 import com.devfox.recipes.Recipe;
 
@@ -12,6 +11,9 @@ public class Machine {
     private Recipe recipe;
     private int powerShards;
     private float currentClockSpeed;
+    private static final float CLOCK_SPEED_PER_POWERSHARD = 0.5f; //The increase in max clock speed per powershard added
+    private static final float BASE_CLOCK_SPEED = 1.0f; //The clock speed without any powershards
+    private static final float SECS_IN_MIN = 60.0f;
 
     public Machine(Recipe recipe){
         this.recipe = recipe;
@@ -24,7 +26,22 @@ public class Machine {
      * @return
      */
     public ItemStack[] getInputPartsPerMin(){
-        throw new MethodNotImplementedException();
+        //Apply the scaled frequency per minute to the input item stacks
+         ItemStack[] baseInputStacks = recipe.getInputItemStacks();
+        ItemStack[] scaledInputStacks = new ItemStack[recipe.getInputItemStacks().length];
+
+        for(int index = 0; index < baseInputStacks.length;index++){
+            scaledInputStacks[index] = new ItemStack(baseInputStacks[index].getItemID(),baseInputStacks[index].getCount() * getRecipeFrequencyPerMin());
+        }
+        return scaledInputStacks;
+    }
+
+    /**
+     * Calculates the frequency with which the current recipe occurs in a minute when taking into account the current machine clock speed
+     * @return The frequency in iterations per minute
+     */
+    public float getRecipeFrequencyPerMin(){
+        return SECS_IN_MIN / getProductionRate();
     }
 
     /**
@@ -32,11 +49,16 @@ public class Machine {
      * @return
      */
     public ItemStack getOutputPartsPerMin(){
-        throw new MethodNotImplementedException();
+        ItemStack baseOutputStack = recipe.getOutputItemStack();
+        return new ItemStack(baseOutputStack.getItemID(),baseOutputStack.getCount() * getRecipeFrequencyPerMin());
     }
 
     public void setClockSpeed(float clockSpeed){
-        throw new MethodNotImplementedException();
+        if(clockSpeed < 0)
+            throw new IllegalArgumentException("Clockspeed provided is " + clockSpeed + " but it cannot be less than 0.");
+        if(clockSpeed > getMaxClockSpeed())
+            throw new IllegalArgumentException("Clockspeed provided is " + clockSpeed + " but it cannot exceed current maximum of " + getMaxClockSpeed());
+        currentClockSpeed = clockSpeed;
     }
 
     public float getCurrentClockSpeed(){
@@ -58,10 +80,12 @@ public class Machine {
      * @return
      */
     public float getProductionRate(){
-        throw new MethodNotImplementedException();
+        if(getCurrentClockSpeed() == 0)
+            return 0.0f;
+        return recipe.getTimeTakenSecs() / getCurrentClockSpeed();
     }
 
     public float getMaxClockSpeed(){
-        throw new MethodNotImplementedException();
+        return BASE_CLOCK_SPEED + (CLOCK_SPEED_PER_POWERSHARD * getPowerShards());
     }
 }
