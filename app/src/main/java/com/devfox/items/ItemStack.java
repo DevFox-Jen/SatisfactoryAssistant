@@ -8,9 +8,15 @@ import java.util.Objects;
 public class ItemStack {
     private float count;
     private String itemID;
+
+    /**
+     *
+     * @param itemID automatically forced to upper case and stripped of leading and following white space
+     * @param count
+     */
     public ItemStack(String itemID, float count){
         this.count = count;
-        this.itemID = itemID.toLowerCase().strip();
+        this.itemID = itemID.toUpperCase().strip();
     }
 
     public float getCount(){

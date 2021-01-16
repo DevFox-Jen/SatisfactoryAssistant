@@ -46,7 +46,7 @@ public class RecipeEvaluatorTest {
 
     @Test public void TestGetComponents(){
         String[] components = RecipeEvaluator.getComponentsOfItem(plateRecipeTestSet,IRON_PLATE);
-        String[] actualComponents = new String[]{IRON_INGOT,IRON_ORE};
+        String[] actualComponents = new String[]{IRON_ORE,IRON_INGOT};
         assertArrayEquals(actualComponents,components);
     }
 }
