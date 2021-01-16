@@ -58,8 +58,27 @@ public class Machine {
      * Attempts to set the output parts per minute of the machine to the given amount by modifying the clock speed accordingly
      * @throws IllegalConfigurationException if the output parts per minute is not achievable given the current maximum clock speed
      */
-    public void setOutputPartsPerMinute(float outputPartsPerMinute) throws IllegalConfigurationException{
-        throw new MethodNotImplementedException();
+    public void setOutputPartsPerMinute(float outputPartsPerMinute){
+        if(outputPartsPerMinute < 0)
+            throw new IllegalConfigurationException("OutputPartsPerMinute cannot be less than 0");
+
+        if(outputPartsPerMinute == 0)
+        {
+            setClockSpeed(0.0f);
+            return;
+        }
+
+        float baseProductionRate = recipe.getTimeTakenSecs();
+        float amountPerIteration = recipe.getOutputItemStack().getCount();
+
+        //Calculate the required clock speed to meet the requested demand using:
+        float requiredClockSpeed = (outputPartsPerMinute * baseProductionRate) / (SECS_IN_MIN * amountPerIteration);
+
+        if(requiredClockSpeed > getMaxClockSpeed())
+            throw new IllegalConfigurationException("Clockspeed required to meet " + outputPartsPerMinute + " PPM is " + requiredClockSpeed + " which exceed machine's max clockspeed of " + getMaxClockSpeed());
+
+        //If everything is fine then just set the clockspeed and everything else should fall into place
+        setClockSpeed(requiredClockSpeed);
     }
 
     public void setClockSpeed(float clockSpeed){

@@ -83,11 +83,9 @@ public class MachineTest {
     @Test
     public void TestOutputPartsPerMinScalesCorrectly(){
         float testRecipeIterationsPerMin = SECS_IN_MIN / testRecipe.getTimeTakenSecs();
-        float randomClockSpeed = (float)Math.random();
-        float testRecipeScaledIterationsPerMin = testRecipeIterationsPerMin * randomClockSpeed;
-        ItemStack scaledItemStack = new ItemStack(testRecipe.getOutputItemStack().getItemID(),testRecipe.getOutputItemStack().getCount() * testRecipeScaledIterationsPerMin);
-        testMachine.setClockSpeed(randomClockSpeed);
-        Assert.assertEquals(scaledItemStack,testMachine.getOutputPartsPerMin());
+        float clockSpeed = 0.25f; //Should drop the output rate to 5ppm
+        testMachine.setClockSpeed(clockSpeed);
+        Assert.assertEquals(5.0f,testMachine.getOutputPartsPerMin().getCount(),0.0f);
     }
 
     @Test
@@ -122,7 +120,7 @@ public class MachineTest {
         testMachine.setOutputPartsPerMinute(30.0f);
     }
 
-    @Test
+    @Test(expected = IllegalConfigurationException.class)
     public void TestSetOutputPPMThrowsIfPPMLessThan0(){
         testMachine.setOutputPartsPerMinute(-1.0f);
     }
@@ -134,6 +132,14 @@ public class MachineTest {
 
     @Test
     public void TestSetOutputPPMWithValidInputWorks(){
+//        System.out.println("Base Output Rate is " + testMachine.getProductionRate());
+//        System.out.println("Base Output Parts Per Minute is " + testMachine.getOutputPartsPerMin().getCount());
+//        System.out.println("Clockspeed is " + testMachine.getCurrentClockSpeed());
+//        System.out.println("Halving clock speed");
+    //    testMachine.setClockSpeed(0.5f);
+//        System.out.println("Clockspeed is "  + testMachine.getCurrentClockSpeed());
+//        System.out.println("Output Parts Per Minute is " + testMachine.getOutputPartsPerMin().getCount());
+
         //The max OPPM is 20.0 with no power shards
         //Setting OPPM to 5.0f should result in a 0.25 clockspeed
         testMachine.setOutputPartsPerMinute(5.0f);
