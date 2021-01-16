@@ -98,6 +98,7 @@ public final class RecipeManager {
      * @throws RecipeListIOException if there is an error loading the recipe list from the inputStream
      */
     public void loadRecipeList(RecipeListIO recipeListIO, InputStream inputStream) throws RecipeListIOException {
+        logger.trace("Start recipe list load");
         recipeList = Arrays.asList(recipeListIO.loadList(inputStream));
     }
 

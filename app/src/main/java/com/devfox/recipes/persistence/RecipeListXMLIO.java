@@ -2,6 +2,8 @@ package com.devfox.recipes.persistence;
 
 import com.devfox.items.ItemStack;
 import com.devfox.recipes.Recipe;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
@@ -22,6 +24,7 @@ import java.util.List;
 import static com.devfox.recipes.persistence.XMLRecipeFileKeyWords.*;
 
 public class RecipeListXMLIO implements RecipeListIO{
+    private static final Logger logger = LogManager.getLogger(RecipeListXMLIO.class);
 
     @Override
     public void saveList(Recipe[] recipeList, OutputStream outputStream) throws RecipeListIOException {
@@ -50,12 +53,14 @@ public class RecipeListXMLIO implements RecipeListIO{
 
     @Override
     public Recipe[] loadList(InputStream inputStream) throws RecipeListIOException {
+        logger.trace("Loading recipe list via XML");
         try{
             DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
             DocumentBuilder builder = dbf.newDocumentBuilder();
             Document document = builder.parse(inputStream);
 
             NodeList recipeNodeList = document.getElementsByTagName(RECIPE_TAG); //Find all recipe tags
+            logger.trace("Found " + recipeNodeList.getLength() + " recipes");
             List<Recipe> recipeList = new ArrayList<>();
             for(int index = 0;index < recipeNodeList.getLength();index++){
                 recipeList.add(parseDOMElementToRecipe((Element)recipeNodeList.item(index)));
@@ -121,6 +126,7 @@ public class RecipeListXMLIO implements RecipeListIO{
             throw new IllegalArgumentException("The DOM node must be a " + RECIPE_TAG + " node");
 
         String recipeName = element.getAttribute(NAME_ATTR);
+        logger.trace("Creating recipe " + recipeName);
         float processTime = Float.parseFloat(element.getAttribute(PROCESS_TIME_ATTR));
 
         Element inputElement = (Element)element.getElementsByTagName(INPUT_TAG).item(0); //WARNING - Assumes there is an input element
@@ -128,6 +134,7 @@ public class RecipeListXMLIO implements RecipeListIO{
 
         Element outputElement = (Element)element.getElementsByTagName(OUTPUT_TAG).item(0); //WARNING - Assumes there is an output element
         ItemStack outputItemStack = parseDOMElementToItemStackArray(outputElement)[0]; //WARNING - Assumes there is only 1 output item and ignores all others
+        logger.trace("Recipe creates " + outputItemStack.getItemID());
         return new Recipe(recipeName,inputItemStacks,outputItemStack,processTime);
     }
 
