@@ -12,10 +12,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.io.*;
+import static com.devfox.recipes.persistence.RecipeListTestFiles.*;
 
 public class RecipeListXMLIOTest {
-    private static final String TEST_RECIPE_FILE_NAME = "recipes_test.xml";
-    private static final String EMPTY_RECIPE_FILE_NAME = "empty_recipes.xml";
     private static final Logger logger = LogManager.getLogger(RecipeListXMLIOTest.class);
     private File testRecipesFile;
     private File emptyRecipesFile;
@@ -31,8 +30,8 @@ public class RecipeListXMLIOTest {
     public void setup() throws FileNotFoundException {
         recipeListIO = new RecipeListXMLIO();
 
-        testRecipesFile = new File(ClassLoader.getSystemResource(TEST_RECIPE_FILE_NAME).getPath());
-        emptyRecipesFile = new File(ClassLoader.getSystemResource(EMPTY_RECIPE_FILE_NAME).getPath());
+        testRecipesFile = new File(ClassLoader.getSystemResource(BASIC_RECIPE_LIST_FILE).getPath());
+        emptyRecipesFile = new File(ClassLoader.getSystemResource(EMPTY_RECIPE_LIST_FILE).getPath());
         testRecipesInputStream = new FileInputStream(testRecipesFile);
         emptyRecipesInputStream = new FileInputStream(emptyRecipesFile);
 
