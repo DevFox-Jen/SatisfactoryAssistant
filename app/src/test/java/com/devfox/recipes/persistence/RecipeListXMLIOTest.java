@@ -9,20 +9,28 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.io.File;
+import java.io.OutputStream;
 
-public class RecipeListXMLFileIOTest {
+public class RecipeListXMLIOTest {
     private static final String TEST_RECIPE_FILE_NAME = "recipes_test.xml";
     private static final String EMPTY_RECIPE_FILE_NAME = "empty_recipes.xml";
+    private static final String TEST_OUTPUT_RECIPE_FILE_NAME = "output_recipes_test.xml";
     private File testRecipesFile;
     private File emptyRecipesFile;
+
     private Recipe[] groundTruthTestRecipeList; //The manually created Recipe array equivalent of the recipes_test.xml file
     private RecipeListIO recipeListIO;
 
+    private File testOutputRecipesFile;
+    private OutputStream outputStream;
+
     @Before
     public void setup(){
-        recipeListIO = new RecipeListXMLFileIO();
+        recipeListIO = new RecipeListXMLIO();
         testRecipesFile = new File(ClassLoader.getSystemResource(TEST_RECIPE_FILE_NAME).getPath());
         emptyRecipesFile = new File(ClassLoader.getSystemResource(EMPTY_RECIPE_FILE_NAME).getPath());
+        testOutputRecipesFile = new File(outputStream.);
+
 
         groundTruthTestRecipeList = new Recipe[3];
         groundTruthTestRecipeList[0] = new BaseRecipe("NormalIronOre",new ItemStack(ItemNames.IRON_ORE,1),1.0f);
@@ -40,5 +48,11 @@ public class RecipeListXMLFileIOTest {
     @Test
     public void TestLoadListReturnsEmptyArrayWithEmptyFile() throws RecipeListIOException{
         Assert.assertArrayEquals("The recipe list returned was not empty",new Recipe[0],recipeListIO.loadList(emptyRecipesFile));
+    }
+
+    @Test
+    public void TestSaveListSuccessfullyWritesFileToSystem() throws RecipeListIOException{
+        recipeListIO.saveList(groundTruthTestRecipeList,testOutputRecipesFile);
+        Assert.assertTrue("The RecipeList was not written to the file system",testOutputRecipesFile.exists());
     }
 }

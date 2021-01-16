@@ -6,6 +6,9 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -81,21 +84,21 @@ public final class RecipeManager {
     /**
      * Attempts to save the recipe list using the specified IO method.
      * @param recipeListIO The IO method to use
-     * @param file The file to save to
-     * @throws RecipeListIOException if there is an error saving the recipe list to the file
+     * @param outputStream The outputStream to save to
+     * @throws RecipeListIOException if there is an error saving the recipe list to the outputStream
      */
-    public void saveRecipeList(RecipeListIO recipeListIO, File file) throws RecipeListIOException {
-        recipeListIO.saveList(getRecipeList(),file);
+    public void saveRecipeList(RecipeListIO recipeListIO, OutputStream outputStream) throws RecipeListIOException {
+        recipeListIO.saveList(getRecipeList(),outputStream);
     }
 
     /**
      * Attempts to load recipes from a form of IO into memory.
      * @param recipeListIO the IO method to use
-     * @param file The file to use
-     * @throws RecipeListIOException if there is an error loading the recipe list from the file
+     * @param inputStream The inputStream to use
+     * @throws RecipeListIOException if there is an error loading the recipe list from the inputStream
      */
-    public void loadRecipeList(RecipeListIO recipeListIO, File file) throws RecipeListIOException {
-        recipeList = Arrays.asList(recipeListIO.loadList(file));
+    public void loadRecipeList(RecipeListIO recipeListIO, InputStream inputStream) throws RecipeListIOException {
+        recipeList = Arrays.asList(recipeListIO.loadList(inputStream));
     }
 
 }

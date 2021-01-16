@@ -14,15 +14,17 @@ import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
 import static com.devfox.recipes.persistence.XMLRecipeFileKeyWords.*;
 
-public class RecipeListXMLFileIO implements RecipeListIO{
+public class RecipeListXMLIO implements RecipeListIO{
 
     @Override
-    public void saveList(Recipe[] recipeList, File location) throws RecipeListIOException {
+    public void saveList(Recipe[] recipeList, OutputStream outputStream) throws RecipeListIOException {
         try {
             DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
             DocumentBuilder builder = dbf.newDocumentBuilder();
@@ -39,8 +41,7 @@ public class RecipeListXMLFileIO implements RecipeListIO{
             Transformer transformer = transformerFactory.newTransformer();
             DOMSource source = new DOMSource(document);
 
-            FileOutputStream fileOutputStream = new FileOutputStream(location);
-            StreamResult result = new StreamResult(fileOutputStream);
+            StreamResult result = new StreamResult(outputStream);
             transformer.transform(source,result);
         }catch(Exception e){
             throw new RecipeListIOException(e.getMessage(),e);
@@ -48,11 +49,11 @@ public class RecipeListXMLFileIO implements RecipeListIO{
     }
 
     @Override
-    public Recipe[] loadList(File location) throws RecipeListIOException {
+    public Recipe[] loadList(InputStream inputStream) throws RecipeListIOException {
         try{
             DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
             DocumentBuilder builder = dbf.newDocumentBuilder();
-            Document document = builder.parse(location);
+            Document document = builder.parse(inputStream);
 
             NodeList recipeNodeList = document.getElementsByTagName(RECIPE_TAG); //Find all recipe tags
             List<Recipe> recipeList = new ArrayList<>();
