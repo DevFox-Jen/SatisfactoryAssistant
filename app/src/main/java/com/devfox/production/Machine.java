@@ -1,5 +1,6 @@
 package com.devfox.production;
 
+import com.devfox.SatisfactoryAssistant.MethodNotImplementedException;
 import com.devfox.items.ItemStack;
 import com.devfox.recipes.Recipe;
 
@@ -51,6 +52,14 @@ public class Machine {
     public ItemStack getOutputPartsPerMin(){
         ItemStack baseOutputStack = recipe.getOutputItemStack();
         return new ItemStack(baseOutputStack.getItemID(),baseOutputStack.getCount() * getRecipeFrequencyPerMin());
+    }
+
+    /**
+     * Attempts to set the output parts per minute of the machine to the given amount by modifying the clock speed accordingly
+     * @throws IllegalConfigurationException if the output parts per minute is not achievable given the current maximum clock speed
+     */
+    public void setOutputPartsPerMinute(float outputPartsPerMinute) throws IllegalConfigurationException{
+        throw new MethodNotImplementedException();
     }
 
     public void setClockSpeed(float clockSpeed){

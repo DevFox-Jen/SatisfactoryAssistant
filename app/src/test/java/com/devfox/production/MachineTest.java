@@ -112,4 +112,31 @@ public class MachineTest {
         testMachine.setClockSpeed(2.0f);
         Assert.assertEquals(20.0f,testMachine.getRecipeFrequencyPerMin(),0.0f);
     }
+
+    /**
+     * OPPM = Output Parts Per Minute
+     */
+    @Test(expected = IllegalConfigurationException.class)
+    public void TestSetOutputPPMThrowsIfPPMExceedsMaxPossible(){
+        //With no power shards, the maximum OPPM is 20.0
+        testMachine.setOutputPartsPerMinute(30.0f);
+    }
+
+    @Test
+    public void TestSetOutputPPMThrowsIfPPMLessThan0(){
+        testMachine.setOutputPartsPerMinute(-1.0f);
+    }
+
+    @Test
+    public void TestSetOutputPPMWithZeroWorks(){
+        testMachine.setOutputPartsPerMinute(0.0f);
+    }
+
+    @Test
+    public void TestSetOutputPPMWithValidInputWorks(){
+        //The max OPPM is 20.0 with no power shards
+        //Setting OPPM to 5.0f should result in a 0.25 clockspeed
+        testMachine.setOutputPartsPerMinute(5.0f);
+        Assert.assertEquals(0.25f,testMachine.getCurrentClockSpeed(),0.0f);
+    }
 }
