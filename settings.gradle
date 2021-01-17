@@ -9,3 +9,4 @@
 
 rootProject.name = 'com.devfox.SatisfactoryAssistant'
 include('app')
+includeBuild('../SatisfactoryAssistant-POM')
