@@ -1,6 +1,6 @@
 package com.devfox.production.pipeline;
 
-public class RecipeMissingException extends RuntimeException{
+public class RecipeMissingException extends Exception{
     /**
      * Used if a single item is missing a recipe
      * @param itemMissingRecipe the name of the item missing a recipe

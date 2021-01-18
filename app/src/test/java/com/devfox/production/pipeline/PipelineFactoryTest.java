@@ -32,19 +32,19 @@ public class PipelineFactoryTest {
     }
 
     @Test(expected = RecipeMissingException.class)
-    public void TestBuildPipelineThrowsIfRecipeListEmpty(){
+    public void TestBuildPipelineThrowsIfRecipeListEmpty() throws RecipeMissingException {
         MockPipelineFactory mockPipelineFactory = new MockPipelineFactory(ItemNames.IRON_ORE);
         mockPipelineFactory.buildPipeline(emptyRecipeList);
     }
 
     @Test(expected = RecipeMissingException.class)
-    public void TestBuildPipelineThrowsIfRecipeForTargetItemMissing(){
+    public void TestBuildPipelineThrowsIfRecipeForTargetItemMissing() throws RecipeMissingException {
         MockPipelineFactory mockPipelineFactory = new MockPipelineFactory(ItemNames.COPPER_ORE);
         mockPipelineFactory.buildPipeline(ironPlateRecipeSet);
     }
 
     @Test(expected = RecipeMissingException.class)
-    public void TestBuildPipelineThrowsIfRequiredRecipeMissingFromList(){
+    public void TestBuildPipelineThrowsIfRequiredRecipeMissingFromList() throws RecipeMissingException {
         //Test that if a recipe list passed into the factory is missing a recipe required to craft the output item, then the method throws an exception
 
         //Remove the iron ingot recipe from the list
