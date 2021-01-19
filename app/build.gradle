@@ -28,6 +28,7 @@ dependencies {
 
     //Include the dependencies from the Pipelines project
     implementation('SatisfactoryAssistant-Pipelines:lib')
+    implementation('SatisfactoryAssistant-POM:lib')
 }
 
 application {

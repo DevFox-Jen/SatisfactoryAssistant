@@ -9,5 +9,5 @@
 
 rootProject.name = 'com.devfox.SatisfactoryAssistant.main'
 include('app')
-//includeBuild('../SatisfactoryAssistant-POM')
+includeBuild('../SatisfactoryAssistant-POM')
 includeBuild('../SatisfactoryAssistant-Pipelines')
