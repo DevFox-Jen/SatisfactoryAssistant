@@ -1,6 +1,6 @@
 package com.devfox.production.pipeline;
 
-import com.devfox.SatisfactoryAssistant.MethodNotImplementedException;
+import com.devfox.MethodNotImplementedException;
 import com.devfox.recipes.Recipe;
 
 /**

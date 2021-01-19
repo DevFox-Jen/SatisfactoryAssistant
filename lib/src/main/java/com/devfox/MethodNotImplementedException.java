@@ -1,4 +1,4 @@
-package com.devfox.SatisfactoryAssistant;
+package com.devfox;
 
 public class MethodNotImplementedException extends RuntimeException{
     public MethodNotImplementedException(){

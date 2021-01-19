@@ -8,4 +8,4 @@
  */
 
 rootProject.name = 'SatisfactoryAssistant-Core'
-include('app')
+include('lib')
