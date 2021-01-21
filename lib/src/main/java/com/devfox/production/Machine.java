@@ -115,4 +115,8 @@ public class Machine {
     public float getMaxClockSpeed(){
         return BASE_CLOCK_SPEED + (CLOCK_SPEED_PER_POWERSHARD * getPowerShards());
     }
+
+    public Recipe getRecipe(){
+        return recipe;
+    }
 }
