@@ -2,6 +2,9 @@ package com.devfox.production.pipeline;
 
 import com.devfox.production.Machine;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * {@linkplain PipelineNode} class represents a node in a tree which represents a manufacturing pipeline.
  * The root node of the tree is the final output item and every subsequent node is a manufacturing operation in the pipeline
@@ -10,7 +13,7 @@ import com.devfox.production.Machine;
  * Leaf nodes represent inputs into the pipeline that have no crafting recipe such as miners or storage containers
  */
 public class PipelineNode {
-    private PipelineNode childNode;
+    private List<PipelineNode> childNodes = new ArrayList<>();
     private PipelineNode parentNode;
     private Machine machine;
 
@@ -18,20 +21,27 @@ public class PipelineNode {
         this.machine = machine;
     }
 
-    public PipelineNode getChildNode(){
-        return parentNode;
+    public PipelineNode[] getChildNodes(){
+        return childNodes.toArray(new PipelineNode[0]);
     }
 
     public PipelineNode getParentNode(){
-        return childNode;
+        return parentNode;
     }
 
     public Machine getMachine(){
         return machine;
     }
+    public void setMachine(Machine machine){
+        this.machine = machine;
+    }
 
-    public void setChildNode(PipelineNode childNode){
-        this.childNode = childNode;
+    public void addChildNode(PipelineNode childNode){
+        childNodes.add(childNode);
+    }
+
+    public void removeChildNode(PipelineNode childNode){
+        childNodes.remove(childNode);
     }
 
     public void setParentNode(PipelineNode parentNode){
@@ -43,6 +53,6 @@ public class PipelineNode {
     }
 
     public boolean isLeafNode(){
-        return getChildNode() == null;
+        return getChildNodes().length == 0;
     }
 }
