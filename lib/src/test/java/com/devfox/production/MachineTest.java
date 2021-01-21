@@ -26,40 +26,7 @@ public class MachineTest {
                 new ItemStack(ItemNames.IRON_PLATE,2),
                 6.0f); //Recipe is Iron_Ingot 3 -> 6 seconds -> Iron_Plate 2
 
-        testMachine = new Machine(testRecipe);
-    }
-
-    @Test
-    public void TestMaxClockSpeedWithPowerShards(){
-        int numPowerShards = 1;
-        testMachine.setPowerShard(numPowerShards);
-        Assert.assertEquals(BASE_MACHINE_CLOCK_SPEED + (POWER_SHARD_CLOCK_SPEED_MODIFIER * numPowerShards),testMachine.getMaxClockSpeed(),0.0f);
-        numPowerShards = 3;
-        testMachine.setPowerShard(numPowerShards);
-        Assert.assertEquals(BASE_MACHINE_CLOCK_SPEED + (POWER_SHARD_CLOCK_SPEED_MODIFIER * numPowerShards),testMachine.getMaxClockSpeed(),0.0f);
-    }
-
-    @Test(expected = IllegalArgumentException.class)
-    public void TestSetClockSpeedThrowsOnExceedingMaxBaseClockSpeed(){
-        testMachine.setClockSpeed(BASE_MACHINE_CLOCK_SPEED + 1.0f);
-    }
-
-    @Test(expected = IllegalArgumentException.class)
-    public void TestSetClockSpeedThrowsOnExceedMaxClockSpeedWithPowerShard(){
-        int numPowerShards = 2;
-        testMachine.setPowerShard(numPowerShards);
-        testMachine.setClockSpeed(BASE_MACHINE_CLOCK_SPEED + (POWER_SHARD_CLOCK_SPEED_MODIFIER * numPowerShards) + 1.0f);
-    }
-
-    @Test
-    public void TestSetClockSpeedSetsSpeedWithinBounds(){
-        testMachine.setClockSpeed(NORMAL_CLOCK_SPEED);
-    }
-
-    @Test
-    public void TestSetClockSpeedSetsAtEdgeCases(){
-        testMachine.setClockSpeed(BASE_MACHINE_CLOCK_SPEED);
-        testMachine.setClockSpeed(0.0f);
+        testMachine = new MockMachine(testRecipe);
     }
 
     @Test(expected = IllegalArgumentException.class)
@@ -91,8 +58,8 @@ public class MachineTest {
     @Test
     public void TestInputPartsPerMinScalesCorrectly(){
         float testRecipeIterationsPerMin = SECS_IN_MIN / testRecipe.getTimeTakenSecs();
-        float randomClockSpeed = (float)Math.random();
-        float testRecipeScaledIterationsPerMin = testRecipeIterationsPerMin * randomClockSpeed;
+        float clockSpeed = 3.5f;
+        float testRecipeScaledIterationsPerMin = testRecipeIterationsPerMin * clockSpeed;
 
         ItemStack[] scaledItemStacks = new ItemStack[testRecipe.getInputItemStacks().length];
         for(int index = 0;index < testRecipe.getInputItemStacks().length;index++){
@@ -100,24 +67,8 @@ public class MachineTest {
             scaledItemStacks[index] = new ItemStack(currentItemStack.getItemID(),currentItemStack.getCount() * testRecipeScaledIterationsPerMin);
         }
 
-        testMachine.setClockSpeed(randomClockSpeed);
+        testMachine.setClockSpeed(clockSpeed);
         Assert.assertArrayEquals(scaledItemStacks,testMachine.getInputPartsPerMin());
-    }
-
-    @Test
-    public void TestScaledFrequencyPerMinute(){
-        testMachine.setPowerShard(2);
-        testMachine.setClockSpeed(2.0f);
-        Assert.assertEquals(20.0f,testMachine.getRecipeFrequencyPerMin(),0.0f);
-    }
-
-    /**
-     * OPPM = Output Parts Per Minute
-     */
-    @Test(expected = IllegalConfigurationException.class)
-    public void TestSetOutputPPMThrowsIfPPMExceedsMaxPossible(){
-        //With no power shards, the maximum OPPM is 20.0
-        testMachine.setOutputPartsPerMinute(30.0f);
     }
 
     @Test(expected = IllegalConfigurationException.class)
@@ -132,16 +83,6 @@ public class MachineTest {
 
     @Test
     public void TestSetOutputPPMWithValidInputWorks(){
-//        System.out.println("Base Output Rate is " + testMachine.getProductionRate());
-//        System.out.println("Base Output Parts Per Minute is " + testMachine.getOutputPartsPerMin().getCount());
-//        System.out.println("Clockspeed is " + testMachine.getCurrentClockSpeed());
-//        System.out.println("Halving clock speed");
-    //    testMachine.setClockSpeed(0.5f);
-//        System.out.println("Clockspeed is "  + testMachine.getCurrentClockSpeed());
-//        System.out.println("Output Parts Per Minute is " + testMachine.getOutputPartsPerMin().getCount());
-
-        //The max OPPM is 20.0 with no power shards
-        //Setting OPPM to 5.0f should result in a 0.25 clockspeed
         testMachine.setOutputPartsPerMinute(5.0f);
         Assert.assertEquals(0.25f,testMachine.getCurrentClockSpeed(),0.0f);
     }

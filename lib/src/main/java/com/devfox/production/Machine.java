@@ -4,20 +4,17 @@ import com.devfox.items.ItemStack;
 import com.devfox.recipes.Recipe;
 
 /**
- * A {@linkplain Machine} represents the production of a {@link com.devfox.recipes.Recipe} at a certain rate per minute. The production rate can be varied between 0 -> 250% where 100% represents a pattern's base production rate.
- * The maximum clockspeed is determined by the number of powershards in the machine
+ * A {@linkplain Machine} represents the production of a {@link com.devfox.recipes.Recipe} at a certain rate per minute.The production rate is determined by the clockspeed.
+ * The maximum clockspeed is determined by the implementation of the class
  */
-public class Machine {
+public abstract class Machine {
     private Recipe recipe;
-    private int powerShards;
     private float currentClockSpeed;
-    private static final float CLOCK_SPEED_PER_POWERSHARD = 0.5f; //The increase in max clock speed per powershard added
-    private static final float BASE_CLOCK_SPEED = 1.0f; //The clock speed without any powershards
-    private static final float SECS_IN_MIN = 60.0f;
+    public static final float BASE_CLOCK_SPEED = 1.0f; //The clock speed without any powershards
+    public static final float SECS_IN_MIN = 60.0f;
 
     public Machine(Recipe recipe){
         this.recipe = recipe;
-        powerShards = 0;
         currentClockSpeed = 1.0f;
     }
 
@@ -92,13 +89,6 @@ public class Machine {
         return currentClockSpeed;
     }
 
-    public int getPowerShards(){
-        return powerShards;
-    }
-
-    public void setPowerShard(int powerShards){
-        this.powerShards = powerShards;
-    }
 
     /**
      * Gets the current production rate of the machine for the current recipe and current machine properties.
@@ -112,9 +102,7 @@ public class Machine {
         return recipe.getTimeTakenSecs() / getCurrentClockSpeed();
     }
 
-    public float getMaxClockSpeed(){
-        return BASE_CLOCK_SPEED + (CLOCK_SPEED_PER_POWERSHARD * getPowerShards());
-    }
+    public abstract float getMaxClockSpeed();
 
     public Recipe getRecipe(){
         return recipe;
