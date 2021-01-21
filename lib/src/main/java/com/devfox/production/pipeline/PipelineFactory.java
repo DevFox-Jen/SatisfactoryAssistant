@@ -36,7 +36,7 @@ public abstract class PipelineFactory {
      * @return The root pipeline node for the resulting pipeline
      * @throws RecipeMissingException if one or more required recipes are missing
      */
-    public PipelineNode buildPipeline(Recipe[] recipes) throws RecipeMissingException{
+    public Pipeline buildPipeline(Recipe[] recipes) throws RecipeMissingException{
         checkAllRequiredRecipesExist(recipes,getOutputItem());
         return onBuildPipeline(recipes);
     }
@@ -91,7 +91,7 @@ public abstract class PipelineFactory {
      * @param recipes The set of recipes to use for creating the pipeline. If there are duplicate recipes then the builder will use the first recipe it finds to produce an item.
      * @return The root pipeline node for the resulting pipeline
      */
-    public abstract PipelineNode onBuildPipeline(Recipe[] recipes);
+    public abstract Pipeline onBuildPipeline(Recipe[] recipes);
 
     /**
      * Sets the amount of the output item to produce per minute

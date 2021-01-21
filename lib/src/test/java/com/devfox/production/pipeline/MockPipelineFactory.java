@@ -12,7 +12,7 @@ public class MockPipelineFactory extends PipelineFactory{
     }
 
     @Override
-    public PipelineNode onBuildPipeline(Recipe[] recipes) {
+    public Pipeline onBuildPipeline(Recipe[] recipes) {
         throw new MethodNotImplementedException();
     }
 }
