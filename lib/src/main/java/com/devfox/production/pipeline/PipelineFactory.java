@@ -100,4 +100,6 @@ public abstract class PipelineFactory {
     public void setTargetOutputPerMinute(float amountPerMinute){
         outputTargetPerMinute = amountPerMinute;
     }
+
+    public float getTargetOutputPerMinute(){return outputTargetPerMinute;}
 }
